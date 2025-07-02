@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 100px;
+  margin-bottom: 100px;
+}
+
+.product-card {
+  max-width: 400px;
+  background-color: #232323;
+  border-radius: 8px;
+  overflow: hidden;
+
+  /* Herança */
+  font-family: "Inter";
+}
+
+/* =========== IMAGEM ============= */
+
+.img-container {
+  margin-bottom: 24px;
+}
+
+.img-container img {
+  display: block;
+  width: 100%;
+  height: 284px;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ========= INFORMAÇÕES ============= */
+
+.product-info {
+  padding: 0 24px;
+  margin-bottom: 28px;
+}
+
+.product-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+
+  margin-bottom: 12px;
+}
+
+.product-description {
+  font-size: 16px;
+  color: #7b7b7b;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  height: 70px;
+}
+
+.badges-list {
+  list-style: none;
+  display: flex;
+  gap: 12px;
+
+  /* Herança */
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.badges-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-estoque,
+.badge-categoria,
+.badge-genero {
+  padding: 7px 10px;
+  border-radius: 8px;
+}
+
+.badge-estoque {
+  background-color: #3a604a;
+  color: #43fd91;
+}
+
+.badge-categoria {
+  background-color: #3a4760;
+  color: #43c2fd;
+}
+
+.badge-genero {
+  background-color: #483a60;
+  color: #9043fd;
+}
+
+/* ============ BOTÕES  =============== */
+
+.action-buttons {
+  display: flex;
+  gap: 20px;
+  padding: 0 24px 32px 24px;
+
+  /* Herança */
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.delete-button,
+.edit-button {
+  padding: 12px 24px;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-button {
+  background-color: #3580dc;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
