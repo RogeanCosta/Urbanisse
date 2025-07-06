@@ -7,21 +7,7 @@ import Header from "./Header";
 function App() {
   return (
     <div>
-      <span>
-      <Header />
-      <BrowserRouter>
-        <div>
-          <div className="route">
-            <a href="">Camisas</a>
-            <a href="">Calças</a>
-            <a href="">Acessórios</a>
-          </div><hr/><br/>
-        </div>
-        <Routes>
-          
-        </Routes>
-      </BrowserRouter>
-      </span>
+      <Header/>
       
       <h1>Cadastro de Produtos</h1>
       <ProductForm />
