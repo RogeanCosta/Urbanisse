@@ -1,7 +1,7 @@
 export default function Acessorios(){
     return (
         <h1>
-            Acessórios
+            Acessórios <br />
         </h1>
     )
 }

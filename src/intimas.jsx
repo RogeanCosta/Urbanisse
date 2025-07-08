@@ -1,7 +1,7 @@
 export default function Intimas(){
     return (
         <h1>
-            Roupas íntimas
+            Roupas íntimas <br />
         </h1>
     )
 }
