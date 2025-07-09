@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "./supabase";
 import ProductCard from "./ProductCard";
 import { useParams } from "react-router-dom";
+import "./ProductList.css";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
@@ -18,7 +19,7 @@ export default function ProductList() {
     case "acessorios":
       categoria = "Acessórios";
       break;
-    case "calcado":
+    case "calcados":
       categoria = "Calçados";
       break;
     case "intimas":
@@ -58,13 +59,10 @@ export default function ProductList() {
   }, []);
 
   return (
-    <div>
-      <h2>{categoria}</h2>
+    <div style={{ padding: "80px" }}>
+      <h2 className="products-title">{categoria}</h2>
       {products.length === 0 && <p>Nenhum produto encontrado.</p>}
-      <div
-        className="product-list"
-        style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}
-      >
+      <div className="products-list">
         {products
           .filter((p) => p.category === categoria || categoria === null)
           .map((p) => (

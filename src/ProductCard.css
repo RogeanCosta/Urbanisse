@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-body {
-  padding: 100px;
-  margin-bottom: 100px;
-}
-
 .product-card {
   width: 400px;
   background-color: #232323;

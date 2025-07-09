@@ -1,6 +1,5 @@
 import React from "react";
 import "./ProductCard.css";
-import SunglassesIcon from "./assets/sunglasses.svg";
 import DeleteIcon from "./assets/trash.svg";
 import EditIcon from "./assets/pencil.svg";
 import BadgesEstoque from "./Badges/BadgesEstoque";
