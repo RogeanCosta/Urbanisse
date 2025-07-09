@@ -1,0 +1,28 @@
+.route {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 10px;
+}
+
+.logo,
+.colorLink {
+  color: black;
+}
+
+.botaoLink {
+  border: solid 3px;
+  border-color: gray;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 20px;
+}

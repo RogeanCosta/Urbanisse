@@ -1,13 +1,33 @@
-import logo from './assets/Urbanisse-logo.svg'
-export default function Header(){
+import { Link } from 'react-router-dom';
+import './Header.css';
 
-    return (
-        <>
-        <span>
-        <h2>Urbanisse</h2>
-        <h5>Clothing Store</h5> 
-        
-        </span>
-        </>
-    )
+export default function Header() {
+  return (
+    <>
+      <header className="header">
+        <div className=" headerContent">
+          <Link to="/" className="logo">
+            <h2>Urbanisse</h2>
+          </Link>
+          <nav style={{ display: 'flex', gap: '20px' }}>
+            <Link to="produtos/camisas">
+              <button className="botaoLink">Camisas</button>
+            </Link>
+            <Link to="produtos/calcas">
+              <button className="botaoLink">Calças</button>
+            </Link>
+            <Link to="produtos/acessorios">
+              <button className="botaoLink">Acessórios</button>
+            </Link>
+            <Link to="produtos/calcados">
+              <button className="botaoLink">Calçados</button>
+            </Link>
+            <Link to="produtos/intimas">
+              <button className="botaoLink">Roupas íntimas</button>
+            </Link>
+          </nav>
+        </div>
+      </header>
+    </>
+  );
 }

@@ -1,13 +1,14 @@
 import React from "react";
 import "./ProductCard.css";
-import boxIcon from "./assets/box.svg";
-import SunglassesIcon from "./assets/sunglasses.svg";
-import UnissexIcon from "./assets/unissex-gender.svg";
 import DeleteIcon from "./assets/trash.svg";
 import EditIcon from "./assets/pencil.svg";
+import BadgesEstoque from "./Badges/BadgesEstoque";
+import BadgesGenero from "./Badges/BadgesGenero";
+import BadgesCategoria from "./Badges/BadgesCategoria";
 
 export default function ProductCard({
   name,
+  price,
   image,
   description,
   estoque,
@@ -18,24 +19,18 @@ export default function ProductCard({
     <div className="product-card">
       <figure className="img-container">
         <img src={image} alt={`Foto do produto ${name}`} />
+        <span className="price">
+          R$ {String(price.toFixed(2)).replace(".", ", ")}
+        </span>
       </figure>
       <div className="product-info">
         <h2 className="product-name">{name}</h2>
         <p className="product-description">{description}</p>
 
         <ul className="badges-list">
-          <li className="badge-estoque">
-            <img src={boxIcon} alt="" />
-            <span>{estoque} em estoque</span>
-          </li>
-          <li className="badge-categoria">
-            <img src={SunglassesIcon} alt="" />
-            <span>{categoria}</span>
-          </li>
-          <li className="badge-genero">
-            <img src={UnissexIcon} alt="" />
-            <span>{genero}</span>
-          </li>
+          <BadgesEstoque estoque={estoque} />
+          <BadgesCategoria categoria={categoria} />
+          <BadgesGenero genero={genero} />
         </ul>
       </div>
       <div className="action-buttons">

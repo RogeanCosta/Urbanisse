@@ -1,0 +1,57 @@
+.badge {
+  padding: 7px 10px;
+  border-radius: 8px;
+}
+
+/* ========== Referente a estoque ========= */
+.badge-estoque {
+  background-color: #3a604a;
+  color: #43fd91;
+}
+
+.badge-sem-estoque {
+  background-color: #603a3a;
+  color: #fd4343;
+}
+
+/* ========= Referente a categoria ======== */
+.badge-calcas {
+  background-color: #302e79;
+  color: #6b86ff;
+}
+
+.badge-intimo {
+  background-color: #793131;
+  color: #f25645;
+}
+
+.badge-acessorios {
+  background-color: #3a4760;
+  color: #43c2fd;
+}
+
+.badge-calcados {
+  background-color: #985929;
+  color: #ff913d;
+}
+
+.badge-camisas {
+  background-color: #987e29;
+  color: #c1e23c;
+}
+
+/* ========= Referente a gênero ========== */
+.badge-unissex {
+  background-color: #483a60;
+  color: #9043fd;
+}
+
+.badge-masculino {
+  background-color: #263362;
+  color: #436efd;
+}
+
+.badge-feminino {
+  background-color: #603a5d;
+  color: #fd43e7;
+}

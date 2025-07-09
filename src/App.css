@@ -1,9 +1,10 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
 
-.route {
-  display: flex;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
-  gap: 20px;
-  padding: 10px;
+.card {
+  padding: 2em;
 }
