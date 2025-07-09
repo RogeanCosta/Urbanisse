@@ -5,6 +5,7 @@ import DeleteIcon from "./assets/trash.svg";
 import EditIcon from "./assets/pencil.svg";
 import BadgesEstoque from "./Badges/BadgesEstoque";
 import BadgesGenero from "./Badges/BadgesGenero";
+import BadgesCategoria from "./Badges/BadgesCategoria";
 
 export default function ProductCard({
   name,
@@ -29,10 +30,7 @@ export default function ProductCard({
 
         <ul className="badges-list">
           <BadgesEstoque estoque={estoque} />
-          <li className="badge-categoria">
-            <img src={SunglassesIcon} alt="" />
-            <span>{categoria}</span>
-          </li>
+          <BadgesCategoria categoria={categoria} />
           <BadgesGenero genero={genero} />
         </ul>
       </div>

@@ -14,6 +14,32 @@
   color: #fd4343;
 }
 
+/* ========= Referente a categoria ======== */
+.badge-calcas {
+  background-color: #302e79;
+  color: #6b86ff;
+}
+
+.badge-intimo {
+  background-color: #793131;
+  color: #f25645;
+}
+
+.badge-acessorios {
+  background-color: #3a4760;
+  color: #43c2fd;
+}
+
+.badge-calcados {
+  background-color: #985929;
+  color: #ff913d;
+}
+
+.badge-camisas {
+  background-color: #987e29;
+  color: #c1e23c;
+}
+
 /* ========= Referente a gênero ========== */
 .badge-unissex {
   background-color: #483a60;
