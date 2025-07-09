@@ -23,6 +23,17 @@ body {
 
 .img-container {
   margin-bottom: 24px;
+  position: relative;
+}
+
+.price {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #fff;
+  background-color: #232323;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .img-container img {
@@ -74,6 +85,7 @@ body {
 }
 
 .badge-estoque,
+.badge-sem-estoque,
 .badge-categoria,
 .badge-genero {
   padding: 7px 10px;
@@ -83,6 +95,11 @@ body {
 .badge-estoque {
   background-color: #3a604a;
   color: #43fd91;
+}
+
+.badge-sem-estoque {
+  background-color: #603a3a;
+  color: #fd4343;
 }
 
 .badge-categoria {

@@ -1,0 +1,14 @@
+.badge {
+  padding: 7px 10px;
+  border-radius: 8px;
+}
+
+.badge-estoque {
+  background-color: #3a604a;
+  color: #43fd91;
+}
+
+.badge-sem-estoque {
+  background-color: #603a3a;
+  color: #fd4343;
+}

@@ -43,6 +43,7 @@ export default function ProductList() {
           <ProductCard
             key={p.id}
             name={p.name}
+            price={p.price}
             image={p.imageUrl}
             description={p.description}
             estoque={p.stock}
