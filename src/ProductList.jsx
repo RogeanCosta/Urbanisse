@@ -1,9 +1,35 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabase";
 import ProductCard from "./ProductCard";
+import { useParams } from "react-router-dom";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
+  const params = useParams();
+  let categoria;
+
+  switch (params.categoria) {
+    case "camisas":
+      categoria = "Camisas";
+      break;
+    case "calcas":
+      categoria = "Calças";
+      break;
+    case "acessorios":
+      categoria = "Acessórios";
+      break;
+    case "calcado":
+      categoria = "Calçados";
+      break;
+    case "intimas":
+      categoria = "Intimo";
+      break;
+    default:
+      categoria = null;
+      break;
+  }
+
+  console.log(categoria);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -33,24 +59,26 @@ export default function ProductList() {
 
   return (
     <div>
-      <h2>Produtos</h2>
+      <h2>{categoria}</h2>
       {products.length === 0 && <p>Nenhum produto encontrado.</p>}
       <div
         className="product-list"
         style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}
       >
-        {products.map((p) => (
-          <ProductCard
-            key={p.id}
-            name={p.name}
-            price={p.price}
-            image={p.imageUrl}
-            description={p.description}
-            estoque={p.stock}
-            categoria={p.category}
-            genero={p.gender}
-          />
-        ))}
+        {products
+          .filter((p) => p.category === categoria || categoria === null)
+          .map((p) => (
+            <ProductCard
+              key={p.id}
+              name={p.name}
+              price={p.price}
+              image={p.imageUrl}
+              description={p.description}
+              estoque={p.stock}
+              categoria={p.category}
+              genero={p.gender}
+            />
+          ))}
       </div>
     </div>
   );
