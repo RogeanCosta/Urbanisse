@@ -3,6 +3,7 @@
   border-radius: 8px;
 }
 
+/* ========== Referente a estoque ========= */
 .badge-estoque {
   background-color: #3a604a;
   color: #43fd91;
@@ -11,4 +12,20 @@
 .badge-sem-estoque {
   background-color: #603a3a;
   color: #fd4343;
+}
+
+/* ========= Referente a gênero ========== */
+.badge-unissex {
+  background-color: #483a60;
+  color: #9043fd;
+}
+
+.badge-masculino {
+  background-color: #263362;
+  color: #436efd;
+}
+
+.badge-feminino {
+  background-color: #603a5d;
+  color: #fd43e7;
 }

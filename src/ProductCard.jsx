@@ -1,11 +1,10 @@
 import React from "react";
 import "./ProductCard.css";
-import boxIcon from "./assets/box.svg";
 import SunglassesIcon from "./assets/sunglasses.svg";
-import UnissexIcon from "./assets/unissex-gender.svg";
 import DeleteIcon from "./assets/trash.svg";
 import EditIcon from "./assets/pencil.svg";
 import BadgesEstoque from "./Badges/BadgesEstoque";
+import BadgesGenero from "./Badges/BadgesGenero";
 
 export default function ProductCard({
   name,
@@ -34,10 +33,7 @@ export default function ProductCard({
             <img src={SunglassesIcon} alt="" />
             <span>{categoria}</span>
           </li>
-          <li className="badge-genero">
-            <img src={UnissexIcon} alt="" />
-            <span>{genero}</span>
-          </li>
+          <BadgesGenero genero={genero} />
         </ul>
       </div>
       <div className="action-buttons">
