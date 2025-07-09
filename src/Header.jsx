@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
-import logo from "./assets/Urbanisse-logo.svg";
-import "./Header.css";
+import { Link } from 'react-router-dom';
+import './Header.css';
 
 export default function Header() {
   return (
@@ -10,7 +9,7 @@ export default function Header() {
           <Link to="/" className="logo">
             <h2>Urbanisse</h2>
           </Link>
-          <nav style={{ display: "flex", gap: "20px" }}>
+          <nav style={{ display: 'flex', gap: '20px' }}>
             <Link to="produtos/camisas">
               <button className="botaoLink">Camisas</button>
             </Link>
