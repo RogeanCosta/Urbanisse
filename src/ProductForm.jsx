@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { supabase } from "./supabase";
 
 export default function ProductForm() {
@@ -9,12 +9,48 @@ export default function ProductForm() {
   const [category, setCategory] = useState("");
   const [gender, setGender] = useState("");
   const [image, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const imageInputRef = useRef();
+
+  // Função que deixa a primeira letra maiúscula
+  function capitalizeFirst(str) {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
+    // Validações
     if (!image) {
       alert("Selecione uma imagem");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!["image/jpeg", "image/png", "image/webp"].includes(image.type)) {
+      alert("Formato de imagem inválido. Use JPEG, PNG ou WEBP.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (parseFloat(price) <= 0 || isNaN(price)) {
+      alert("O preço deve ser um número positivo.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (parseInt(stock) < 0 || isNaN(stock)) {
+      alert("O estoque não pode ser negativo.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (name.trim().length < 3 || description.trim().length < 5) {
+      alert("Nome ou descrição muito curtos.");
+      setIsLoading(false);
       return;
     }
 
@@ -29,6 +65,7 @@ export default function ProductForm() {
     if (storageError) {
       alert("Erro ao enviar imagem");
       console.error(storageError);
+      setIsLoading(false);
       return;
     }
 
@@ -39,29 +76,27 @@ export default function ProductForm() {
 
     const imageUrl = urlData.publicUrl;
 
-    // 3. Novo produto
+    // 3. Criar novo produto com normalização
     const newProduct = {
       id: Date.now(),
-      name,
+      name: name.trim(),
       price: parseFloat(price),
-      description,
+      description: description.trim(),
       stock: parseInt(stock),
-      category,
-      gender,
+      category: capitalizeFirst(category.trim()),
+      gender: capitalizeFirst(gender.trim()),
       imageUrl,
       imagePath,
     };
 
-    // 4. Baixar JSON real existente do Supabase (sem cache)
+    // 4. Obter produtos existentes
     let productList = [];
 
     const { data: fileData, error: downloadError } = await supabase.storage
       .from("products-json")
       .download("produtos.json");
 
-    if (downloadError) {
-      console.warn("Arquivo ainda não existe, será criado.");
-    } else {
+    if (!downloadError) {
       const text = await fileData.text();
       try {
         const parsed = JSON.parse(text);
@@ -71,14 +106,15 @@ export default function ProductForm() {
       }
     }
 
-    // 5. Adicionar novo produto à lista
+    // 5. Adicionar e ordenar produtos
     productList.push(newProduct);
+    productList.sort((a, b) => b.id - a.id);
 
     const updatedJson = new Blob([JSON.stringify(productList)], {
       type: "application/json",
     });
 
-    // 6. Substituir JSON no Supabase
+    // 6. Salvar JSON atualizado
     const { error: uploadError } = await supabase.storage
       .from("products-json")
       .upload("produtos.json", updatedJson, { upsert: true });
@@ -88,6 +124,7 @@ export default function ProductForm() {
       console.error(uploadError);
     } else {
       alert("Produto cadastrado com sucesso!");
+
       // Resetar formulário
       setName("");
       setPrice("");
@@ -96,7 +133,12 @@ export default function ProductForm() {
       setCategory("");
       setGender("");
       setImage(null);
+      if (imageInputRef.current) {
+        imageInputRef.current.value = null;
+      }
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -130,28 +172,36 @@ export default function ProductForm() {
         placeholder="Estoque"
         required
       />
-      <input
+      <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        placeholder="Categoria"
         required
-      />
+      >
+        <option value="">Selecione a categoria</option>
+        <option value="Camisas">Camisas</option>
+        <option value="Acessórios">Acessórios</option>
+        <option value="Calçados">Calçados</option>
+        <option value="Moletons">Moletons</option>
+      </select>
       <select
         value={gender}
         onChange={(e) => setGender(e.target.value)}
         required
       >
         <option value="">Selecione o gênero</option>
-        <option value="masculino">Masculino</option>
-        <option value="feminino">Feminino</option>
-        <option value="unissex">Unissex</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Feminino">Feminino</option>
+        <option value="Unissex">Unissex</option>
       </select>
       <input
         type="file"
+        ref={imageInputRef}
         onChange={(e) => setImage(e.target.files[0])}
         required
       />
-      <button type="submit">Cadastrar Produto</button>
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? "Salvando..." : "Cadastrar Produto"}
+      </button>
     </form>
   );
 }
