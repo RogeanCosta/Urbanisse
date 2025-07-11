@@ -57,7 +57,7 @@ export default function ProductList() {
   }, []);
 
   return (
-    <div style={{ padding: '80px' }}>
+    <div style={{ padding: '30px' }}>
       <h2 className="products-title">{categoria}</h2>
       {products.length === 0 && <p>Nenhum produto encontrado.</p>}
       <div className="products-list">

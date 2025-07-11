@@ -8,6 +8,7 @@
   width: 400px;
   background-color: #232323;
   border-radius: 8px;
+  border: 1px solid #fff;
   overflow: hidden;
 
   /* Herança */
