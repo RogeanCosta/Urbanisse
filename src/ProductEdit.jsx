@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { supabase } from "./supabase";
-import { useParams } from "react-router-dom"
-import './ProductForm.css'
+import { useEffect, useState } from 'react';
+import { supabase } from './supabase';
+import { useParams } from 'react-router-dom';
+import './ProductForm.css';
 
 export default function ProductEditor() {
   const [products, setProducts] = useState([]);
   const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    description: "",
-    stock: "",
-    category: "",
-    gender: "",
+    name: '',
+    price: '',
+    description: '',
+    stock: '',
+    category: '',
+    gender: '',
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -19,7 +19,7 @@ export default function ProductEditor() {
 
   // Função para deixar a primeira letra maiúscula
   function capitalizeFirst(str) {
-    if (!str) return "";
+    if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
@@ -27,11 +27,11 @@ export default function ProductEditor() {
   useEffect(() => {
     async function fetchProducts() {
       const { data, error } = await supabase.storage
-        .from("products-json")
-        .download("produtos.json");
+        .from('products-json')
+        .download('produtos.json');
 
       if (error) {
-        console.error("Erro ao carregar JSON:", error);
+        console.error('Erro ao carregar JSON:', error);
         return;
       }
 
@@ -39,9 +39,9 @@ export default function ProductEditor() {
         const text = await data.text();
         const parsed = JSON.parse(text);
         setProducts(Array.isArray(parsed) ? parsed : [parsed]);
-        console.log("Produtos carregados:", parsed);
+        console.log('Produtos carregados:', parsed);
       } catch (err) {
-        console.error("Erro ao interpretar JSON:", err);
+        console.error('Erro ao interpretar JSON:', err);
       }
     }
 
@@ -49,22 +49,22 @@ export default function ProductEditor() {
   }, []);
 
   useEffect(() => {
-  if (id && products.length > 0) {
-    const product = products.find((p) => p.id === parseInt(id));
-    console.log("Procurando produto com ID:", id, "Encontrado:", product);
-     
-    if (product) {
-      setFormData({
-        name: product.name,
-        price: product.price,
-        description: product.description,
-        stock: product.stock,
-        category: product.category,
-        gender: product.gender,
-      });
+    if (id && products.length > 0) {
+      const product = products.find((p) => p.id === parseInt(id));
+      console.log('Procurando produto com ID:', id, 'Encontrado:', product);
+
+      if (product) {
+        setFormData({
+          name: product.name,
+          price: product.price,
+          description: product.description,
+          stock: product.stock,
+          category: product.category,
+          gender: product.gender,
+        });
+      }
     }
-  }
-}, [id, products]);
+  }, [id, products]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -91,28 +91,28 @@ export default function ProductEditor() {
     });
 
     const updatedJson = new Blob([JSON.stringify(updatedProducts)], {
-      type: "application/json",
+      type: 'application/json',
     });
 
     const { error } = await supabase.storage
-      .from("products-json")
-      .upload("produtos.json", updatedJson, { upsert: true });
+      .from('products-json')
+      .upload('produtos.json', updatedJson, { upsert: true });
 
     if (error) {
-      alert("Erro ao salvar alterações");
+      alert('Erro ao salvar alterações');
       console.error(error);
     } else {
-      alert("Produto atualizado com sucesso!");
+      alert('Produto atualizado com sucesso!');
       setProducts(updatedProducts);
 
       // 🧼 Limpa o formulário e o select após salvar
       setFormData({
-        name: "",
-        price: "",
-        description: "",
-        stock: "",
-        category: "",
-        gender: "",
+        name: '',
+        price: '',
+        description: '',
+        stock: '',
+        category: '',
+        gender: '',
       });
     }
 
@@ -120,14 +120,12 @@ export default function ProductEditor() {
   };
 
   return (
-    <div style={{ maxWidth: "500px", margin: "auto" }}>
-
+    <div style={{ maxWidth: '500px', margin: 'auto' }}>
       {id && (
         <form
           onSubmit={handleUpdate}
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
         >
-
           <label htmlFor="name">Nome do Produto</label>
           <input
             name="name"
@@ -165,7 +163,7 @@ export default function ProductEditor() {
             placeholder="Estoque"
             required
           />
-          
+
           <label htmlFor="category">Categoria</label>
           <select
             name="category"
@@ -177,7 +175,8 @@ export default function ProductEditor() {
             <option value="Camisas">Camisas</option>
             <option value="Acessórios">Acessórios</option>
             <option value="Calçados">Calçados</option>
-            <option value="Moletons">Moletons</option>
+            <option value="Calças">Calças</option>
+            <option value="Intimo">Intimo</option>
           </select>
 
           <label htmlFor="gender">Gênero</label>
@@ -192,9 +191,9 @@ export default function ProductEditor() {
             <option value="Feminino">Feminino</option>
             <option value="Unissex">Unissex</option>
           </select>
-          
+
           <button type="submit" disabled={isLoading}>
-            {isLoading ? "Salvando..." : "Salvar Alterações"}
+            {isLoading ? 'Salvando...' : 'Salvar Alterações'}
           </button>
         </form>
       )}

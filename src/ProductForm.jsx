@@ -1,14 +1,14 @@
-import { useRef, useState } from "react";
-import { supabase } from "./supabase";
-import './ProductForm.css'
+import { useRef, useState } from 'react';
+import { supabase } from './supabase';
+import './ProductForm.css';
 
 export default function ProductForm() {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [stock, setStock] = useState("");
-  const [category, setCategory] = useState("");
-  const [gender, setGender] = useState("");
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [stock, setStock] = useState('');
+  const [category, setCategory] = useState('');
+  const [gender, setGender] = useState('');
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -16,7 +16,7 @@ export default function ProductForm() {
 
   // Função que deixa a primeira letra maiúscula
   function capitalizeFirst(str) {
-    if (!str) return "";
+    if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
@@ -26,31 +26,31 @@ export default function ProductForm() {
 
     // Validações
     if (!image) {
-      alert("Selecione uma imagem");
+      alert('Selecione uma imagem');
       setIsLoading(false);
       return;
     }
 
-    if (!["image/jpeg", "image/png", "image/webp"].includes(image.type)) {
-      alert("Formato de imagem inválido. Use JPEG, PNG ou WEBP.");
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(image.type)) {
+      alert('Formato de imagem inválido. Use JPEG, PNG ou WEBP.');
       setIsLoading(false);
       return;
     }
 
     if (parseFloat(price) <= 0 || isNaN(price)) {
-      alert("O preço deve ser um número positivo.");
+      alert('O preço deve ser um número positivo.');
       setIsLoading(false);
       return;
     }
 
     if (parseInt(stock) < 0 || isNaN(stock)) {
-      alert("O estoque não pode ser negativo.");
+      alert('O estoque não pode ser negativo.');
       setIsLoading(false);
       return;
     }
 
     if (name.trim().length < 3 || description.trim().length < 5) {
-      alert("Nome ou descrição muito curtos.");
+      alert('Nome ou descrição muito curtos.');
       setIsLoading(false);
       return;
     }
@@ -60,11 +60,11 @@ export default function ProductForm() {
 
     // 1. Upload da imagem
     const { error: storageError } = await supabase.storage
-      .from("images")
+      .from('images')
       .upload(imagePath, image);
 
     if (storageError) {
-      alert("Erro ao enviar imagem");
+      alert('Erro ao enviar imagem');
       console.error(storageError);
       setIsLoading(false);
       return;
@@ -72,7 +72,7 @@ export default function ProductForm() {
 
     // 2. Obter URL pública da imagem
     const { data: urlData } = supabase.storage
-      .from("images")
+      .from('images')
       .getPublicUrl(imagePath);
 
     const imageUrl = urlData.publicUrl;
@@ -94,8 +94,8 @@ export default function ProductForm() {
     let productList = [];
 
     const { data: fileData, error: downloadError } = await supabase.storage
-      .from("products-json")
-      .download("produtos.json");
+      .from('products-json')
+      .download('produtos.json');
 
     if (!downloadError) {
       const text = await fileData.text();
@@ -103,7 +103,7 @@ export default function ProductForm() {
         const parsed = JSON.parse(text);
         productList = Array.isArray(parsed) ? parsed : [parsed];
       } catch (e) {
-        console.error("Erro ao interpretar JSON existente:", e);
+        console.error('Erro ao interpretar JSON existente:', e);
       }
     }
 
@@ -112,27 +112,27 @@ export default function ProductForm() {
     productList.sort((a, b) => b.id - a.id);
 
     const updatedJson = new Blob([JSON.stringify(productList)], {
-      type: "application/json",
+      type: 'application/json',
     });
 
     // 6. Salvar JSON atualizado
     const { error: uploadError } = await supabase.storage
-      .from("products-json")
-      .upload("produtos.json", updatedJson, { upsert: true });
+      .from('products-json')
+      .upload('produtos.json', updatedJson, { upsert: true });
 
     if (uploadError) {
-      alert("Erro ao salvar JSON");
+      alert('Erro ao salvar JSON');
       console.error(uploadError);
     } else {
-      alert("Produto cadastrado com sucesso!");
+      alert('Produto cadastrado com sucesso!');
 
       // Resetar formulário
-      setName("");
-      setPrice("");
-      setDescription("");
-      setStock("");
-      setCategory("");
-      setGender("");
+      setName('');
+      setPrice('');
+      setDescription('');
+      setStock('');
+      setCategory('');
+      setGender('');
       setImage(null);
       if (imageInputRef.current) {
         imageInputRef.current.value = null;
@@ -145,7 +145,7 @@ export default function ProductForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+      style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
     >
       <label htmlFor="image">Imagem do Produto</label>
       <input
@@ -204,7 +204,8 @@ export default function ProductForm() {
         <option value="Camisas">Camisas</option>
         <option value="Acessórios">Acessórios</option>
         <option value="Calçados">Calçados</option>
-        <option value="Moletons">Moletons</option>
+        <option value="Calças">Calças</option>
+        <option value="Intimo">Intimo</option>
       </select>
 
       <label htmlFor="gender">Gênero</label>
@@ -220,9 +221,8 @@ export default function ProductForm() {
         <option value="Unissex">Unissex</option>
       </select>
 
-
       <button type="submit" disabled={isLoading}>
-        {isLoading ? "Salvando..." : "Cadastrar Produto"}
+        {isLoading ? 'Salvando...' : 'Cadastrar Produto'}
       </button>
     </form>
   );
