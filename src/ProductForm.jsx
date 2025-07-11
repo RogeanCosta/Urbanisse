@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { supabase } from "./supabase";
+import './ProductForm.css'
 
 export default function ProductForm() {
   const [name, setName] = useState("");
@@ -146,32 +147,54 @@ export default function ProductForm() {
       onSubmit={handleSubmit}
       style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
     >
+      <label htmlFor="image">Imagem do Produto</label>
+      <input
+        type="file"
+        ref={imageInputRef}
+        onChange={(e) => setImage(e.target.files[0])}
+        required
+        name="image"
+      />
+
+      <label htmlFor="name">Nome do Produto</label>
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Nome"
         required
+        name="name"
       />
+
+      <label htmlFor="price">Preço</label>
       <input
         type="number"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
         placeholder="Preço"
+        name="price"
         required
       />
+
+      <label htmlFor="description">Descrição</label>
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Descrição"
         required
+        name="description"
       />
+
+      <label htmlFor="stock">Quantidade no estoque</label>
       <input
         type="number"
         value={stock}
         onChange={(e) => setStock(e.target.value)}
         placeholder="Estoque"
         required
+        name="stock"
       />
+
+      <label htmlFor="category">Categoria</label>
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
@@ -183,22 +206,21 @@ export default function ProductForm() {
         <option value="Calçados">Calçados</option>
         <option value="Moletons">Moletons</option>
       </select>
+
+      <label htmlFor="gender">Gênero</label>
       <select
         value={gender}
         onChange={(e) => setGender(e.target.value)}
         required
+        name="gender"
       >
         <option value="">Selecione o gênero</option>
         <option value="Masculino">Masculino</option>
         <option value="Feminino">Feminino</option>
         <option value="Unissex">Unissex</option>
       </select>
-      <input
-        type="file"
-        ref={imageInputRef}
-        onChange={(e) => setImage(e.target.files[0])}
-        required
-      />
+
+
       <button type="submit" disabled={isLoading}>
         {isLoading ? "Salvando..." : "Cadastrar Produto"}
       </button>

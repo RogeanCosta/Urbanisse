@@ -1,0 +1,35 @@
+form {
+    font-family: "Inter", sans-serif;
+    width: 603px;
+    margin: auto;
+}
+
+label {
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding-top: 12px;
+}
+
+form button {
+    border-radius: 3px;
+    line-height: 50%;
+    text-align: center;
+    background-color: #3AB667;
+    margin-top: 12px;
+    height: 30px;
+}
+
+form input, textarea, select, input:focus {
+    font-size: 0.9rem;
+    outline: none;
+    color: #FFFFFF;
+    border: 2px solid #444444;
+    background-color: #2C2C2C;
+    height: 35px;
+    padding-left: 10px;
+}
+
+textarea {
+    padding-top: 10px;
+    height: 99px;
+}

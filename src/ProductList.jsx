@@ -67,7 +67,6 @@ export default function ProductList() {
           .filter((p) => p.category === categoria || categoria === null)
           .map((p) => (
             <ProductCard
-              key={p.id}
               name={p.name}
               price={p.price}
               image={p.imageUrl}
@@ -75,6 +74,7 @@ export default function ProductList() {
               estoque={p.stock}
               categoria={p.category}
               genero={p.gender}
+              id={p.id}
             />
           ))}
       </div>

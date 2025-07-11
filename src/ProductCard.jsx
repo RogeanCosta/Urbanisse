@@ -5,6 +5,7 @@ import EditIcon from "./assets/pencil.svg";
 import BadgesEstoque from "./Badges/BadgesEstoque";
 import BadgesGenero from "./Badges/BadgesGenero";
 import BadgesCategoria from "./Badges/BadgesCategoria";
+import { Link } from 'react-router-dom';
 
 export default function ProductCard({
   name,
@@ -14,7 +15,9 @@ export default function ProductCard({
   estoque,
   categoria,
   genero,
+  id,
 }) {
+  console.log({name})
   return (
     <div className="product-card">
       <figure className="img-container">
@@ -34,10 +37,12 @@ export default function ProductCard({
         </ul>
       </div>
       <div className="action-buttons">
-        <button className="edit-button">
+        <Link to={`/editarproduto/${id}`}>
+          <button className="edit-button">
           <img src={EditIcon} alt="" />
           <span>Editar</span>
-        </button>
+          </button>
+        </Link>
         <button className="delete-button">
           <img src={DeleteIcon} alt="" />
           <span>Excluir</span>

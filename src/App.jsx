@@ -9,16 +9,12 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <h1>Cadastro de Produtos</h1>
-      <ProductForm />
-
-       <h1>Editar Produto</h1>
-      <ProductEditor />
-
       <Routes>
         <Route path="/" element={<ProductList />} />
         <Route path="produtos/:categoria" element={<ProductList />} />
         <Route path="*" element={<Error />} />
+        <Route path="novoproduto" element={<ProductForm />} />
+        <Route path="editarproduto/:id" element={<ProductEditor />}/>
       </Routes>
     </BrowserRouter>
   );

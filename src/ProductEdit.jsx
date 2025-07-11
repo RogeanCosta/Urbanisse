@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabase";
+import { useParams } from "react-router-dom"
+import './ProductForm.css'
 
 export default function ProductEditor() {
   const [products, setProducts] = useState([]);
-  const [selectedId, setSelectedId] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -13,6 +14,8 @@ export default function ProductEditor() {
     gender: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+
+  const { id } = useParams();
 
   // Função para deixar a primeira letra maiúscula
   function capitalizeFirst(str) {
@@ -44,22 +47,22 @@ export default function ProductEditor() {
     fetchProducts();
   }, []);
 
-  // Preenche o formulário quando um produto é selecionado
   useEffect(() => {
-    if (selectedId) {
-      const product = products.find((p) => p.id === parseInt(selectedId));
-      if (product) {
-        setFormData({
-          name: product.name,
-          price: product.price,
-          description: product.description,
-          stock: product.stock,
-          category: product.category,
-          gender: product.gender,
-        });
-      }
+  if (id && products.length > 0) {
+    const product = products.find((p) => p.id === parseInt(id));
+     
+    if (product) {
+      setFormData({
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        stock: product.stock,
+        category: product.category,
+        gender: product.gender,
+      });
     }
-  }, [selectedId]);
+  }
+}, [id, products]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -70,7 +73,7 @@ export default function ProductEditor() {
     setIsLoading(true);
 
     const updatedProducts = products.map((product) => {
-      if (product.id === parseInt(selectedId)) {
+      if (product.id === parseInt(id)) {
         return {
           ...product,
           ...formData,
@@ -109,7 +112,6 @@ export default function ProductEditor() {
         category: "",
         gender: "",
       });
-      setSelectedId("");
     }
 
     setIsLoading(false);
@@ -117,26 +119,14 @@ export default function ProductEditor() {
 
   return (
     <div style={{ maxWidth: "500px", margin: "auto" }}>
-      <h2>Editar Produto</h2>
 
-      <select
-        value={selectedId}
-        onChange={(e) => setSelectedId(e.target.value)}
-        style={{ marginBottom: "1rem", width: "100%" }}
-      >
-        <option value="">Selecione um produto</option>
-        {products.map((product) => (
-          <option key={product.id} value={product.id}>
-            {product.name} (ID: {product.id})
-          </option>
-        ))}
-      </select>
-
-      {selectedId && (
+      {id && (
         <form
           onSubmit={handleUpdate}
           style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
         >
+
+          <label htmlFor="name">Nome do Produto</label>
           <input
             name="name"
             value={formData.name}
@@ -144,6 +134,8 @@ export default function ProductEditor() {
             placeholder="Nome"
             required
           />
+
+          <label htmlFor="price">Preço</label>
           <input
             name="price"
             type="number"
@@ -152,6 +144,8 @@ export default function ProductEditor() {
             placeholder="Preço"
             required
           />
+
+          <label htmlFor="description">Descrição</label>
           <textarea
             name="description"
             value={formData.description}
@@ -159,6 +153,8 @@ export default function ProductEditor() {
             placeholder="Descrição"
             required
           />
+
+          <label htmlFor="stock">Quantidade no estoque</label>
           <input
             name="stock"
             type="number"
@@ -167,6 +163,8 @@ export default function ProductEditor() {
             placeholder="Estoque"
             required
           />
+          
+          <label htmlFor="category">Categoria</label>
           <select
             name="category"
             value={formData.category}
@@ -179,6 +177,8 @@ export default function ProductEditor() {
             <option value="Calçados">Calçados</option>
             <option value="Moletons">Moletons</option>
           </select>
+
+          <label htmlFor="gender">Gênero</label>
           <select
             name="gender"
             value={formData.gender}
@@ -190,6 +190,7 @@ export default function ProductEditor() {
             <option value="Feminino">Feminino</option>
             <option value="Unissex">Unissex</option>
           </select>
+          
           <button type="submit" disabled={isLoading}>
             {isLoading ? "Salvando..." : "Salvar Alterações"}
           </button>
