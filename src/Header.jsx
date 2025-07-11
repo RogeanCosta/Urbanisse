@@ -25,12 +25,9 @@ export default function Header() {
             <Link to="produtos/intimas">
               <button className="botaoLink">Roupas íntimas</button>
             </Link>
-             <Link to="novoproduto">
-              <button className="botaoLink">Novo Produto</button>
-            </Link>
           </nav>
           <nav className='novo-produto'>
-            <Link to="/">
+            <Link to="novoproduto">
               <button className='botaoNovoProduto'>+ Novo Produto</button>
             </Link>
           </nav>
