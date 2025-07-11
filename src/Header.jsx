@@ -27,7 +27,7 @@ export default function Header() {
             </Link>
           </nav>
           <nav className='novo-produto'>
-            <Link to="/">
+            <Link to="novoproduto">
               <button className='botaoNovoProduto'>+ Novo Produto</button>
             </Link>
           </nav>
