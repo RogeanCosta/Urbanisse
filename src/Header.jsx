@@ -9,7 +9,7 @@ export default function Header() {
           <Link to="/" className="logo">
             <h2>Urbanisse</h2>
           </Link>
-          <nav style={{ display: 'flex', gap: '20px' }}>
+          <nav className='categorias-header'>
             <Link to="produtos/camisas">
               <button className="botaoLink">Camisas</button>
             </Link>
@@ -29,7 +29,13 @@ export default function Header() {
               <button className="botaoLink">Novo Produto</button>
             </Link>
           </nav>
+          <nav className='novo-produto'>
+            <Link to="/">
+              <button className='botaoNovoProduto'>+ Novo Produto</button>
+            </Link>
+          </nav>
         </div>
+        <hr />
       </header>
     </>
   );
