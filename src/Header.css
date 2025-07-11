@@ -1,28 +1,66 @@
-.route {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  gap: 20px;
-  padding: 10px;
-}
-
 .logo,
 .colorLink {
-  color: black;
+  color: whitesmoke;
 }
 
 .botaoLink {
   border: solid 3px;
-  border-color: gray;
+  border-color: rgb(54, 54, 54);
+  background-color: rgb(54, 54, 54);
+  color:whitesmoke;
 }
 
+.header {
+  margin-bottom: 40px;
+  background-color: rgb(54, 54, 54);
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+}
+
+.categorias-header {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap:wrap ;
+  align-items: center;
+  width: 100%;
+}
+
+.botaoNovoProduto {
+  height: 45px;
+  width: 170px;
+  background-color: rgb(28, 235, 90);
+  border-radius: 4px;
+}
+
+/*responsividade*/
+@media (max-width: 320px){
 .header {
   margin-bottom: 40px;
 }
 
 .headerContent {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  flex-direction: row;
   padding: 20px;
+}
+
+.categorias-header {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap:wrap ;
+  align-items: center;
+  width: 100%;
+}
+
+.botaoNovoProduto {
+  height: 45px;
+  width: 70px;
+  border-radius: 4px;
+}
 }
