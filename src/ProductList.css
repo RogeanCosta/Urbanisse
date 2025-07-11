@@ -1,5 +1,7 @@
 .products-title {
-  margin-bottom: 20px;
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 50px;
   text-align: center;
 }
 
@@ -7,5 +9,5 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, max-content));
   justify-content: center;
-  gap: 1rem;
+  gap: 3rem 2rem;
 }

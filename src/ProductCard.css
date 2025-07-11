@@ -8,10 +8,11 @@
   width: 400px;
   background-color: #232323;
   border-radius: 8px;
+  border: 1px solid #fff;
   overflow: hidden;
 
   /* Herança */
-  font-family: "Inter";
+  font-family: 'Inter';
 }
 
 /* =========== IMAGEM ============= */
@@ -77,34 +78,6 @@
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-.badge-estoque,
-.badge-sem-estoque,
-.badge-categoria,
-.badge-genero {
-  padding: 7px 10px;
-  border-radius: 8px;
-}
-
-.badge-estoque {
-  background-color: #3a604a;
-  color: #43fd91;
-}
-
-.badge-sem-estoque {
-  background-color: #603a3a;
-  color: #fd4343;
-}
-
-.badge-categoria {
-  background-color: #3a4760;
-  color: #43c2fd;
-}
-
-.badge-genero {
-  background-color: #483a60;
-  color: #9043fd;
 }
 
 /* ============ BOTÕES  =============== */

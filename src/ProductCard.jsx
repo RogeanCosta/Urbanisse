@@ -1,10 +1,10 @@
-import React from "react";
-import "./ProductCard.css";
-import DeleteIcon from "./assets/trash.svg";
-import EditIcon from "./assets/pencil.svg";
-import BadgesEstoque from "./Badges/BadgesEstoque";
-import BadgesGenero from "./Badges/BadgesGenero";
-import BadgesCategoria from "./Badges/BadgesCategoria";
+import React from 'react';
+import './ProductCard.css';
+import DeleteIcon from './assets/trash.svg';
+import EditIcon from './assets/pencil.svg';
+import BadgesEstoque from './Badges/BadgesEstoque';
+import BadgesGenero from './Badges/BadgesGenero';
+import BadgesCategoria from './Badges/BadgesCategoria';
 import { Link } from 'react-router-dom';
 
 export default function ProductCard({
@@ -17,13 +17,12 @@ export default function ProductCard({
   genero,
   id,
 }) {
-  console.log({name})
   return (
     <div className="product-card">
       <figure className="img-container">
         <img src={image} alt={`Foto do produto ${name}`} />
         <span className="price">
-          R$ {String(price.toFixed(2)).replace(".", ", ")}
+          R$ {String(price.toFixed(2)).replace('.', ', ')}
         </span>
       </figure>
       <div className="product-info">
@@ -39,8 +38,8 @@ export default function ProductCard({
       <div className="action-buttons">
         <Link to={`/editarproduto/${id}`}>
           <button className="edit-button">
-          <img src={EditIcon} alt="" />
-          <span>Editar</span>
+            <img src={EditIcon} alt="" />
+            <span>Editar</span>
           </button>
         </Link>
         <button className="delete-button">
