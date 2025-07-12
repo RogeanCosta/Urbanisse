@@ -1,0 +1,25 @@
+.paginationComponent {
+  margin-bottom: 50px;
+}
+
+.pagination {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.pageItem {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #232323;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageLink,
+.message {
+  font-size: 1.25rem;
+  color: #fff;
+}
