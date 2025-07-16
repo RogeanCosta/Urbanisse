@@ -1,45 +1,43 @@
-import { useEffect, useState } from 'react';
-import { supabase } from './supabase';
-import { useParams, useNavigate } from 'react-router-dom';
-import './ProductForm.css';
+import { useEffect, useState } from "react";
+import { supabase } from "./supabase";
+import { useParams, useNavigate } from "react-router-dom";
+import "./ProductForm.css";
 
 export default function ProductEditor() {
   const [products, setProducts] = useState([]);
   const [formData, setFormData] = useState({
-    name: '',
-    price: '',
-    description: '',
-    stock: '',
-    category: '',
-    gender: '',
+    name: "",
+    price: "",
+    description: "",
+    stock: "",
+    category: "",
+    gender: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
   const { id } = useParams();
-  const navigate = useNavigate(); // ✅ useNavigate declarado corretamente
+  const navigate = useNavigate();
 
   function capitalizeFirst(str) {
-    if (!str) return '';
+    if (!str) return "";
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
   useEffect(() => {
     async function fetchProducts() {
-      const { data, error } = await supabase.storage
-        .from('products-json')
-        .download('produtos.json');
-
-      if (error) {
-        console.error('Erro ao carregar JSON:', error);
-        return;
-      }
-
       try {
-        const text = await data.text();
+        const { data: urlData } = supabase.storage
+          .from("products-json")
+          .getPublicUrl("produtos.json");
+
+        const response = await fetch(`${urlData.publicUrl}?t=${Date.now()}`);
+        const text = await response.text();
         const parsed = JSON.parse(text);
-        setProducts(Array.isArray(parsed) ? parsed : [parsed]);
-      } catch (err) {
-        console.error('Erro ao interpretar JSON:', err);
+        const productsArray = Array.isArray(parsed) ? parsed : [parsed];
+
+        setProducts(productsArray);
+      } catch (error) {
+        console.error("Erro ao carregar JSON:", error);
       }
     }
 
@@ -87,43 +85,41 @@ export default function ProductEditor() {
     });
 
     const updatedJson = new Blob([JSON.stringify(updatedProducts)], {
-      type: 'application/json',
+      type: "application/json",
     });
 
     const { error } = await supabase.storage
-      .from('products-json')
-      .upload('produtos.json', updatedJson, { upsert: true });
+      .from("products-json")
+      .upload("produtos.json", updatedJson, { upsert: true });
 
     if (error) {
-      alert('Erro ao salvar alterações');
+      alert("Erro ao salvar alterações");
       console.error(error);
     } else {
-      alert('Produto atualizado com sucesso!');
+      alert("Produto atualizado com sucesso!");
       setProducts(updatedProducts);
 
-      // Limpa o formulário
       setFormData({
-        name: '',
-        price: '',
-        description: '',
-        stock: '',
-        category: '',
-        gender: '',
+        name: "",
+        price: "",
+        description: "",
+        stock: "",
+        category: "",
+        gender: "",
       });
 
-      // ✅ Redireciona para a tela inicial
-      navigate('/');
+      navigate("/");
     }
 
     setIsLoading(false);
   };
 
   return (
-    <div style={{ maxWidth: '500px', margin: 'auto' }}>
+    <div style={{ maxWidth: "500px", margin: "auto" }}>
       {id && (
         <form
           onSubmit={handleUpdate}
-          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
         >
           <label htmlFor="name">Nome do Produto</label>
           <input
@@ -192,7 +188,7 @@ export default function ProductEditor() {
           </select>
 
           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Salvando...' : 'Salvar Alterações'}
+            {isLoading ? "Salvando..." : "Salvar Alterações"}
           </button>
         </form>
       )}
