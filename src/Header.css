@@ -38,19 +38,26 @@
 }
 
 /*responsividade*/
-@media (max-width: 320px){
+@media (max-width: 562px){
 .header {
   margin-bottom: 40px;
 }
 
 .headerContent {
-  display: flex;
-  flex-direction: row;
+  display:flex;
+  align-items: center;
   padding: 20px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+body {
+  width: max-content;
 }
 
 .categorias-header {
   display: flex;
+  flex-direction: column;
   gap: 14px;
   justify-content: center;
   flex-wrap:wrap ;
@@ -58,9 +65,5 @@
   width: 100%;
 }
 
-.botaoNovoProduto {
-  height: 45px;
-  width: 70px;
-  border-radius: 4px;
-}
+
 }
