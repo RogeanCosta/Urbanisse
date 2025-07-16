@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { supabase } from './supabase';
+import { useNavigate } from 'react-router-dom';
 import './ProductForm.css';
 
 export default function ProductForm() {
@@ -13,8 +14,8 @@ export default function ProductForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   const imageInputRef = useRef();
+  const navigate = useNavigate(); // ✅ Criado corretamente no início
 
-  // Função que deixa a primeira letra maiúscula
   function capitalizeFirst(str) {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -24,7 +25,6 @@ export default function ProductForm() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Validações
     if (!image) {
       alert('Selecione uma imagem');
       setIsLoading(false);
@@ -58,7 +58,6 @@ export default function ProductForm() {
     const imageName = `${Date.now()}_${image.name}`;
     const imagePath = `${imageName}`;
 
-    // 1. Upload da imagem
     const { error: storageError } = await supabase.storage
       .from('images')
       .upload(imagePath, image);
@@ -70,14 +69,12 @@ export default function ProductForm() {
       return;
     }
 
-    // 2. Obter URL pública da imagem
     const { data: urlData } = supabase.storage
       .from('images')
       .getPublicUrl(imagePath);
 
     const imageUrl = urlData.publicUrl;
 
-    // 3. Criar novo produto com normalização
     const newProduct = {
       id: Date.now(),
       name: name.trim(),
@@ -90,7 +87,6 @@ export default function ProductForm() {
       imagePath,
     };
 
-    // 4. Obter produtos existentes
     let productList = [];
 
     const { data: fileData, error: downloadError } = await supabase.storage
@@ -107,7 +103,6 @@ export default function ProductForm() {
       }
     }
 
-    // 5. Adicionar e ordenar produtos
     productList.push(newProduct);
     productList.sort((a, b) => b.id - a.id);
 
@@ -115,7 +110,6 @@ export default function ProductForm() {
       type: 'application/json',
     });
 
-    // 6. Salvar JSON atualizado
     const { error: uploadError } = await supabase.storage
       .from('products-json')
       .upload('produtos.json', updatedJson, { upsert: true });
@@ -126,7 +120,7 @@ export default function ProductForm() {
     } else {
       alert('Produto cadastrado com sucesso!');
 
-      // Resetar formulário
+      // ✅ Limpa o formulário
       setName('');
       setPrice('');
       setDescription('');
@@ -137,6 +131,9 @@ export default function ProductForm() {
       if (imageInputRef.current) {
         imageInputRef.current.value = null;
       }
+
+      // ✅ Redireciona após cadastro
+      navigate('/');
     }
 
     setIsLoading(false);

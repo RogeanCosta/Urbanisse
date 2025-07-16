@@ -16,8 +16,8 @@ export default function ProductList() {
   useEffect(() => {
     setCurrentPage(1);
   }, [params.categoria]);
-  let categoria;
 
+  let categoria;
   switch (params.categoria) {
     case "camisas":
       categoria = "Camisas";
@@ -39,40 +39,38 @@ export default function ProductList() {
       break;
   }
 
-  useEffect(() => {
-    async function fetchProducts() {
-      setLoading(true);
+  const carregarProdutos = async () => {
+    setLoading(true);
 
-      const { data: urlData, error } = supabase.storage
-        .from("products-json")
-        .getPublicUrl("produtos.json");
+    const { data: urlData, error } = supabase.storage
+      .from("products-json")
+      .getPublicUrl("produtos.json");
 
-      if (error) {
-        console.error("Erro ao obter URL do JSON:", error);
-        setLoading(false);
-
-        return;
-      }
-
-      try {
-        const response = await fetch(`${urlData.publicUrl}?t=${Date.now()}`);
-        if (!response.ok) throw new Error("Erro ao carregar JSON");
-
-        const json = await response.json();
-        const lista = Array.isArray(json) ? json : [json];
-
-        setProducts(lista);
-      } catch (err) {
-        console.error("Erro ao buscar produtos:", err);
-      } finally {
-        setLoading(false);
-      }
+    if (error) {
+      console.error("Erro ao obter URL do JSON:", error);
+      setLoading(false);
+      return;
     }
 
-    fetchProducts();
+    try {
+      const response = await fetch(`${urlData.publicUrl}?t=${Date.now()}`);
+      if (!response.ok) throw new Error("Erro ao carregar JSON");
+
+      const json = await response.json();
+      const lista = Array.isArray(json) ? json : [json];
+
+      setProducts(lista);
+    } catch (err) {
+      console.error("Erro ao buscar produtos:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    carregarProdutos();
   }, []);
 
-  // Obtendo posts para página atual.
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const correspondentPosts = products.filter(
@@ -86,10 +84,12 @@ export default function ProductList() {
   return (
     <div style={{ padding: "30px" }}>
       <h2 className="products-title">{categoria}</h2>
+
       {loading && <p className="message">Carregando produtos....</p>}
       {!loading && products.length === 0 && (
         <p className="message">Nenhum produto encontrado.</p>
       )}
+
       {!loading && (
         <>
           <div className="products-list">
@@ -104,6 +104,7 @@ export default function ProductList() {
                 categoria={p.category}
                 genero={p.gender}
                 id={p.id}
+                onDelete={carregarProdutos} // <-- Atualiza após exclusão!
               />
             ))}
           </div>

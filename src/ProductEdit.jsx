@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from './supabase';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './ProductForm.css';
 
 export default function ProductEditor() {
@@ -16,14 +16,13 @@ export default function ProductEditor() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { id } = useParams();
+  const navigate = useNavigate(); // ✅ useNavigate declarado corretamente
 
-  // Função para deixar a primeira letra maiúscula
   function capitalizeFirst(str) {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
-  // Carrega os produtos do JSON ao iniciar
   useEffect(() => {
     async function fetchProducts() {
       const { data, error } = await supabase.storage
@@ -39,7 +38,6 @@ export default function ProductEditor() {
         const text = await data.text();
         const parsed = JSON.parse(text);
         setProducts(Array.isArray(parsed) ? parsed : [parsed]);
-        console.log('Produtos carregados:', parsed);
       } catch (err) {
         console.error('Erro ao interpretar JSON:', err);
       }
@@ -51,8 +49,6 @@ export default function ProductEditor() {
   useEffect(() => {
     if (id && products.length > 0) {
       const product = products.find((p) => p.id === parseInt(id));
-      console.log('Procurando produto com ID:', id, 'Encontrado:', product);
-
       if (product) {
         setFormData({
           name: product.name,
@@ -105,7 +101,7 @@ export default function ProductEditor() {
       alert('Produto atualizado com sucesso!');
       setProducts(updatedProducts);
 
-      // 🧼 Limpa o formulário e o select após salvar
+      // Limpa o formulário
       setFormData({
         name: '',
         price: '',
@@ -114,6 +110,9 @@ export default function ProductEditor() {
         category: '',
         gender: '',
       });
+
+      // ✅ Redireciona para a tela inicial
+      navigate('/');
     }
 
     setIsLoading(false);
